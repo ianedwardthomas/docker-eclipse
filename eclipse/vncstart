@@ -1,0 +1,25 @@
+#!/bin/sh -e
+### BEGIN INIT INFO
+# Provides:          vncserver
+# Required-Start:    networking
+# Default-Start:     3 4 5
+# Default-Stop:      0 6
+### END INIT INFO
+
+PATH="$PATH:/usr/X11R6/bin/"
+
+# # The Username:Group that will run VNC
+export USER=${RUNUSER}
+
+# The name that the VNC Desktop will have.
+NAME="my-vnc-server"
+
+OPTIONS="-name ${NAME} -depth ${DEPTH} -geometry ${GEO}  :${DISPLAY}"
+
+. /lib/lsb/init-functions
+
+log_action_begin_msg "Starting vncserver for user '${USER}' on localhost:${DISPLAY} at ${GEO}x${DEPTH}"
+su ${USER} -c "/usr/bin/vncserver ${OPTIONS} </run.sh"
+
+# Annoyingly, can't find a way to dedaemonise vncserver
+tail -f /dev/null

@@ -1,0 +1,28 @@
+version: "2"
+
+# This is a standard image, with build args included into the hub image.
+
+services:
+
+    eclipse:
+        restart: always
+        build: eclipse
+        ports:
+            - "5901:5901"
+            - "2200:22"
+        networks:
+            - eclipse
+        environment:
+            - RUNUSER=ubuntu
+            - DISPLAY=1
+        volumes:
+            - eclipseuserdata:/home/ubuntu
+        command:
+            - "/sbin/my_init"
+        env_file: .env
+networks:
+    eclipse:
+        driver: bridge
+
+volumes:
+    eclipseuserdata:
