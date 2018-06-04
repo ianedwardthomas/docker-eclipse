@@ -15,8 +15,9 @@ services:
         environment:
             - RUNUSER=ubuntu
             - DISPLAY=1
-        volumes:
-            - eclipseuserdata:/home/ubuntu
+        volumes: 
+             - ./data:/home/ubuntu
+            #- eclipseuserdata:/home/ubuntu
         command:
             - "/sbin/my_init"
         env_file: .env
